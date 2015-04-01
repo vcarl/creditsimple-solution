@@ -1,16 +1,16 @@
-Lee | Jonathan | M | M | PT | 3-13-1987
-Perez | Joanna | M | F | SLP | 12-19-1990
-Tepedino | Jenna | M | F | SLP | 6-10-1990
-Mani | Mathew | A | M | MD | 12-14-1964
-Dadasheva| Casey |  | F | NP | 9-19-1979
-Agredo | Sandra | C | F | CSW | 1-22-1964
-Beecher | Andrew | H | M | CSW | 7-04-1947
-Chase | Carola | B | F | CSW | 1-21-1949
-Cullen-Kortleven | Kathleen |  | F | NP | 9-10-1952
-Emerton | Mary | D | F | CSW | 8-07-1962
-Feist | Sandra | K | F | CSW | 5-30-1968
-Guido | Marietta |  | F | CSW | 1-05-1963
-Kossuth | Jeannette | M | F | CSW | 10-01-1953
-Lee | Donna | J | F | CSW | 7-20-1977
-Mallard | Henry | C | M | MD | 8-15-1945
-Mikkola | Eeva | J | F | MD | 12-18-1974
+Lee|Jonathan|M|M|PT|3-13-87
+Perez|Joanna|M|F|SLP|12-19-90
+Tepedino|Jenna|M|F|SLP|6-10-90
+Mani|Mathew|A|M|MD|12-14-64
+Dadasheva|Casey||F|NP|9-19-79
+Agredo|Sandra|C|F|CSW|1-22-64
+Beecher|Andrew|H|M|CSW|7-04-47
+Chase|Carola|B|F|C.S.W.|1-21-49
+Cullen-Kortleven|Kathleen||F|NP|9-10-52
+Emerton|Mary|D|F|CSW|8-07-62
+Feist|Sandra|K|F|CSW|5-30-68
+Guido|Marietta||F|CSW|1-05-63
+Kossuth|Jeannette|M|F|CSW|10-01-53
+Lee|Donna|J|F|CSW|7-20-77
+Mallard|Henry|C|M|MD|8-15-45
+Mikkola|Eeva|J|F|MD|12-18-74
