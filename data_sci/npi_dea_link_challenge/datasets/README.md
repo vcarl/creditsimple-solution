@@ -13,7 +13,7 @@ The effect is to really push the model they develop, because they will trying to
 
 ## Inspecting cohorts
 The easiest cases to match will be those where the name fields on the NPI and DEA are very close (around ~80% of all entities) and where the address for the practitioner on the NPI and DEA are in the same city and state (around ~60%). This is the low hanging fruit... we'll be most interest in how well the model performs outside of those conditions (e.g., weird name variations and addresses in different cities or states). 
-[estimate.sql](data_sci/npi_dea_link_challenge/sql/estimate.sql)
+[estimate.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/estimate.sql)
 
 ```
  cohort | gender_npi | city_state_match | state_match_only | no_match | low_score_match | is_cs_provider | total
@@ -61,7 +61,7 @@ The easiest cases to match will be those where the name fields on the NPI and DE
 ```
 
 ## Formatting and masking NPI data
-[training_set_1.sql](challenge/data_sci/npi_dea_link_challenge/sql/training_set_1.sql)
+[training_set_1.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/training_set_1.sql)
 ```
          practitioner_id          |                 full_name                  |          city          | state | gender
 ----------------------------------+--------------------------------------------+------------------------+-------+--------
@@ -76,7 +76,7 @@ The easiest cases to match will be those where the name fields on the NPI and DE
  ```
 
 ## Formatting and masking DEA data
-[training_set_2.sql](challenge/data_sci/npi_dea_link_challenge/sql/training_set_2.sql)
+[training_set_2.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/training_set_2.sql)
 ```
          practitioner_id          |               full_name               |               city                | state | gender
 ----------------------------------+---------------------------------------+-----------------------------------+-------+--------
@@ -91,7 +91,7 @@ The easiest cases to match will be those where the name fields on the NPI and DE
  ```
 
 ## Mapping the NPI-DEA pairs
-[paired_keys.sql](challenge/data_sci/npi_dea_link_challenge/sql/paired_keys.sql)
+[paired_keys.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/paired_keys.sql)
  ```
         practitioner_id_1         |        practitioner_id_2
 ----------------------------------+----------------------------------
