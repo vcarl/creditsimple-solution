@@ -12,7 +12,9 @@ DEAs are given for cohorts 4, 5, 6, 7, 8, and 9.
 The effect is to really push the model they develop, because they will trying to match NPIs to a DEA dataset which 1) does not have corresponding DEAs for cohort 3 to test the model's performance on true negatives 2) has DEAs from cohorts 8 and 9 to test the model's perfomance on avoiding false positives. This is kind of a mean wrench to throw because this means any DEAs that are matched to NPIs for cohort 3 are garaunteed to be wrong.   
 
 ## Inspecting cohorts
+
 https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/estimate.sql
+
 The easiest cases to match will be those where the name fields on the NPI and DEA are very close (around ~80% of all entities) and where the address for the practitioner on the NPI and DEA are in the same city and state (around ~60%). This is the low hanging fruit... we'll be most interest in how well the model performs outside of those conditions (e.g., weird name variations and addresses in different cities or states). 
 
 ```
@@ -61,7 +63,9 @@ The easiest cases to match will be those where the name fields on the NPI and DE
 ```
 
 ## Formatting and masking NPI data
+
 https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/training_set_1.sql
+
 ```
          practitioner_id          |                 full_name                  |          city          | state | gender
 ----------------------------------+--------------------------------------------+------------------------+-------+--------
@@ -76,7 +80,9 @@ https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challe
  ```
 
 ## Formatting and masking DEA data
+
 https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/training_set_2.sql
+
 ```
          practitioner_id          |               full_name               |               city                | state | gender
 ----------------------------------+---------------------------------------+-----------------------------------+-------+--------
@@ -91,8 +97,10 @@ https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challe
  ```
 
 ## Mapping the NPI-DEA pairs
+
 https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/paired_keys.sql
- ```
+
+```
         practitioner_id_1         |        practitioner_id_2
 ----------------------------------+----------------------------------
  739a73315c5110b70fcb781023f509f2 | 8cbd7fd9e632e6cce702fcc1347b1eba
