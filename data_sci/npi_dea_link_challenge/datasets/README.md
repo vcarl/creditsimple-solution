@@ -1,21 +1,44 @@
 # DATA SETUP
 
+The data for the data science challenge is built off of a view in the data warehouse called [v1_ds_cc.entity_masterkey(https://github.com/CredSimple/challenge/blob/master/data_sci/wh_setup/deploy/entity_master_view.sql). It is just a big join of all of the primary source keys for the entities that Linkasaur has been able to match (minus columns that are not relevant to the data challenge). It looks like this:
+
+```
+id     |    npi     |            name_npi             | gender |   city_npi   | state_npi | dea_number |         name_dea          |  city_dea   | state_dea | linkasaur
+-------+------------+---------------------------------+--------+--------------+-----------+------------+---------------------------+-------------+-----------+-----------
+399470 | 1598958019 | DR. THOMAS ANDREW BOWMAN M.D.   | M      | LUBBOCK      | TX        | FB2594352  | BOWMAN, THOMAS, A., MD    | LUBBOCK     | TX        |    0.9819
+220614 | 1659636439 | DR. REBECCA ROYCE-HICKEY D.O.   | F      | PHILADELPHIA | PA        | FR5231446  | ROYCE-HICKEY, REBECCA, M  | ALLENTOWN   | PA        |    0.9790
+406192 | 1063652162 | DR. DESMOND ANTHONY JOLLY MD    | M      | SAN DIEGO    | CA        | FJ0761254  | JOLLY, DESMOND A          | CHULA VISTA | CA        |    0.9528
+145108 | 1790994390 | DR. JOHN P. WHEELER MD          | M      | AMES         | IA        | FW2578409  | WHEELER, JOHN P., MD      | AMES        | IA        |    0.9830
+52015  | 1477638385 | RUMMANA RAHMAN MD               | F      | BROOKLYN     | NY        | BR2602363  | RAHMAN, RUMMANA MD        | BROOKLYN    | NY        |    0.9619
+257925 | 1154522365 | MALINA VARNER M.D.              | F      | HERSHEY      | PA        | FV2630300  | VARNER, MALINA, M, MD     | HERSHEY     | PA        |    0.9775
+305441 | 1639274475 | DAVID SOLTANPOUR MD             | M      | BROOKLYN     | NY        | BS7734088  | SOLTANPOUR, DAVID MD      | BROOKLYN    | NY        |    0.9618
+304495 | 1851471726 | INNA SERBIN MD                  | F      | NEW YORK     | NY        | AS2320808  | SERBIN  INNA MD           | NEW YORK    | NY        |    0.9899
+381423 | 1710034632 | DR. DAVID BRIAN GOLDENBERG M.D. | M      | NEW YORK     | NY        | BG4056912  | GOLDENBERG, DAVID, B (MD) | NEW YORK    | NY        |    0.9738
+337634 | 1093198475 | ROHIT GUPTA D.O.                | M      | NEW YORK     | NY        | FG3070050  | GUPTA, ROHIT              | WEBSTER     | NY        |    0.9542
+```
+
+The idea is grab two sets from this table - one with the joins intact so the candidate has training data to build a model, and a second validation set where we will remove the join and see what the candidate will be able to match. After the candidate submits their work we will be able to evaluate the performance of their model by matching back to the table above.
+
+First we need to make to split this data into nice even buckets (or cohorts) to make sure that we aren't putting the same practitioner data in both the training and validation data sets we give to the candidate. We also need to hash the NPI and DEA numbers to mask that data from the candidate, and make sure that we aren't giving them data for providers we already have in CredSimple.
+
 ## Setting up cohorts
-Use the % modulo operator on the id column from `v1_ds_cc.entity_masterkey`. `id % 20` effectively splits the entities into 20 cohorts of roughly equal size. This was you can make sure that your entities are always in the same buckets as you split the data into NPI and DEA files. 
+Use the % modulo operator on the id column from `v1_ds_cc.entity_masterkey`. `id % 20` effectively splits the entities into 20 cohorts of roughly equal size. This was you can make sure that your entities are always in the same buckets as you split the data into NPI and DEA files.
 
-## Testing data
-One of the "tricks" used in this code challenge is to give the candidate a DEA dataset that is larger than the NPI dataset. The candidate is given NPI/DEA training data sets from cohorts 1 and 2 to build their model. Their task is to find DEA matches for the NPIs of cohorts we put in the validation data sets. 
+## Training data
+One of the "tricks" used in this code challenge is to give the candidate a DEA dataset that is larger than the NPI dataset.
 
-## Validation data
-NPIs are given for cohorts 3, 4, 5, 6, and 7. 
-DEAs are given for cohorts 4, 5, 6, 7, 8, and 9. 
+The candidate is given NPI/DEA training data sets from [cohorts 1 and 2](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/training_set_1.sql#L9) to build their model.
+
+Their task is to find DEA matches for the NPIs of cohorts we put in the validation data sets.
+
+## Validation (Testing) data
+NPIs are given for [cohorts 3, 4, 5, 6, and 7](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/validation_set_1.sql#L9).
+DEAs are given for [cohorts 4, 5, 6, 7, 8, and 9](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/validation_set_2.sql#L9).
 The effect is to really push the model they develop, because they will trying to match NPIs to a DEA dataset which 1) does not have corresponding DEAs for cohort 3 to test the model's performance on true negatives 2) has DEAs from cohorts 8 and 9 to test the model's perfomance on avoiding false positives. This is kind of a mean wrench to throw because this means any DEAs that are matched to NPIs for cohort 3 are garaunteed to be wrong.   
 
-## Inspecting cohorts
+## Inspecting cohorts: [estimate.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/estimate.sql)
 
-https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/estimate.sql
-
-The easiest cases to match will be those where the name fields on the NPI and DEA are very close (around ~80% of all entities) and where the address for the practitioner on the NPI and DEA are in the same city and state (around ~60%). This is the low hanging fruit... we'll be most interest in how well the model performs outside of those conditions (e.g., weird name variations and addresses in different cities or states). 
+The easiest cases to match will be those where the name fields on the NPI and DEA are very close (around ~80% of all entities) and where the address for the practitioner on the NPI and DEA are in the same city and state (around ~60%). This is the low hanging fruit... we'll be most interest in how well the model performs outside of those conditions (e.g., weird name variations and addresses in different cities or states).
 
 ```
  cohort | gender_npi | city_state_match | state_match_only | no_match | low_score_match | is_cs_provider | total
@@ -62,9 +85,7 @@ The easiest cases to match will be those where the name fields on the NPI and DE
      19 | M          |             0.61 |             0.31 |     0.08 |            0.21 |           0.61 |  1970
 ```
 
-## Formatting and masking NPI data
-
-https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/training_set_1.sql
+## Formatting and masking NPI data: [training_set_1.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/training_set_1.sql)
 
 ```
          practitioner_id          |                 full_name                  |          city          | state | gender
@@ -79,9 +100,7 @@ https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challe
  bacdcb36389d8148849d830fa0701d34 | DR. DENISE LEUNG MD                        | NEW YORK               | NY    | F
  ```
 
-## Formatting and masking DEA data
-
-https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/training_set_2.sql
+## Formatting and masking DEA data: [training_set_2.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/training_set_2.sql)
 
 ```
          practitioner_id          |               full_name               |               city                | state | gender
@@ -96,9 +115,7 @@ https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challe
  696b0f23e14325eb7936874fbb3594bc | LEUNG, DENISE MD                      | NEW YORK                          | NY    | F
  ```
 
-## Mapping the NPI-DEA pairs
-
-https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/paired_keys.sql
+## Mapping the NPI-DEA pairs: [paired_keys.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/paired_keys.sql)
 
 ```
         practitioner_id_1         |        practitioner_id_2
@@ -113,5 +130,4 @@ https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challe
  bacdcb36389d8148849d830fa0701d34 | 696b0f23e14325eb7936874fbb3594bc
  ```
 ## Submission
-The candidate's submission should look like the mapping table above, with a third column containing a score between 0 and 1 of the strength of their match. 
-
+The candidate's submission should look like the mapping table above, with a third column containing a score between 0 and 1 of the strength of their match.
