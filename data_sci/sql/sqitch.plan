@@ -1,0 +1,5 @@
+%syntax-version=1.0.0
+%project=ds_cc
+
+v1_ds_code_challenge 2017-01-25T03:40:18Z Christopher Compeau <christopher@credsimple.com> # Add schema
+entity_master_view 2017-01-25T03:46:44Z Christopher Compeau <christopher@credsimple.com> # Create a view for entity master key
