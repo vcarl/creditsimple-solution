@@ -11,9 +11,8 @@ NPIs are given for cohorts 3, 4, 5, 6, and 7.
 DEAs are given for cohorts 4, 5, 6, 7, 8, and 9. 
 The effect is to really push the model they develop, because they will trying to match NPIs to a DEA dataset which 1) does not have corresponding DEAs for cohort 3 to test the model's performance on true negatives 2) has DEAs from cohorts 8 and 9 to test the model's perfomance on avoiding false positives. This is kind of a mean wrench to throw because this means any DEAs that are matched to NPIs for cohort 3 are garaunteed to be wrong.   
 
-## Inspecting cohorts
+## Inspecting cohorts[estimate.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/estimate.sql)
 The easiest cases to match will be those where the name fields on the NPI and DEA are very close (around ~80% of all entities) and where the address for the practitioner on the NPI and DEA are in the same city and state (around ~60%). This is the low hanging fruit... we'll be most interest in how well the model performs outside of those conditions (e.g., weird name variations and addresses in different cities or states). 
-[estimate.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/estimate.sql)
 
 ```
  cohort | gender_npi | city_state_match | state_match_only | no_match | low_score_match | is_cs_provider | total
@@ -60,8 +59,7 @@ The easiest cases to match will be those where the name fields on the NPI and DE
      19 | M          |             0.61 |             0.31 |     0.08 |            0.21 |           0.61 |  1970
 ```
 
-## Formatting and masking NPI data
-[training_set_1.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/training_set_1.sql)
+## Formatting and masking NPI data[training_set_1.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/training_set_1.sql)
 ```
          practitioner_id          |                 full_name                  |          city          | state | gender
 ----------------------------------+--------------------------------------------+------------------------+-------+--------
@@ -75,8 +73,7 @@ The easiest cases to match will be those where the name fields on the NPI and DE
  bacdcb36389d8148849d830fa0701d34 | DR. DENISE LEUNG MD                        | NEW YORK               | NY    | F
  ```
 
-## Formatting and masking DEA data
-[training_set_2.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/training_set_2.sql)
+## Formatting and masking DEA data[training_set_2.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/training_set_2.sql)
 ```
          practitioner_id          |               full_name               |               city                | state | gender
 ----------------------------------+---------------------------------------+-----------------------------------+-------+--------
@@ -90,8 +87,7 @@ The easiest cases to match will be those where the name fields on the NPI and DE
  696b0f23e14325eb7936874fbb3594bc | LEUNG, DENISE MD                      | NEW YORK                          | NY    | F
  ```
 
-## Mapping the NPI-DEA pairs
-[paired_keys.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/paired_keys.sql)
+## Mapping the NPI-DEA pairs[paired_keys.sql](https://github.com/CredSimple/challenge/blob/master/data_sci/npi_dea_link_challenge/sql/paired_keys.sql)
  ```
         practitioner_id_1         |        practitioner_id_2
 ----------------------------------+----------------------------------
