@@ -17,7 +17,7 @@ id     |    npi     |            name_npi             | gender |   city_npi   | 
 337634 | 1093198475 | ROHIT GUPTA D.O.                | M      | NEW YORK     | NY        | FG3070050  | GUPTA, ROHIT              | WEBSTER     | NY        |    0.9542
 ```
 
-The idea is grab two sets from this table - one with the joins intact so the candidate has training data to build a model, and a second validation set where we will remove the join and see what the candidate will be able to match. After the candidate submits their work we will be able to evaluate the performance of their model by matching back to the table above.
+The idea is to grab two sets from this table - one with the joins intact so the candidate has training data to build a model, and a second validation set where we will remove the join and see what the candidate will be able to match. After the candidate submits their work we will be able to evaluate the performance of their model by matching back to the table above.
 
 First we need to make to split this data into nice even buckets (or cohorts) to make sure that we aren't putting the same practitioner data in both the training and validation data sets we give to the candidate. We also need to hash the NPI and DEA numbers to mask that data from the candidate, and make sure that we aren't giving them data for providers we already have in CredSimple.
 
