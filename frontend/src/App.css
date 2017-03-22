@@ -1,0 +1,81 @@
+html {
+  font-size: 16px;
+}
+
+.app {
+  margin: auto;
+  max-width: 700px;
+}
+
+.navigation {
+  margin: 2rem;
+  display: flex;
+}
+
+.navigation a {
+  display: inline-block;
+  margin: auto;
+  text-decoration: none;
+  color: #aaa;
+  border: 1px solid #ccc;
+  padding: .25rem;
+  border-radius: .25rem;
+}
+
+.navigation a.active {
+  color: #333;
+  border-color: #333;
+}
+
+.agent-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+  border: 1px solid #ccc;
+  border-radius: .25rem;
+  box-shadow: 0 4px 5px rgba(25, 25, 25, 0.1);
+}
+
+.agent-list .expired {
+  background-color: pink;
+  padding: .5rem;
+  margin: -.5rem;
+}
+
+.agent-list .agent-row {
+  cursor: pointer;
+  padding: .5rem;
+  border-top: 1px solid #ccc;
+}
+
+.agent-list .agent-row:first-of-type {
+  border-top: none;
+}
+
+.agent-list .agent-row:not(:last-of-type) {
+  border-bottom: none;
+}
+
+.agent-details .detail-item {
+  display: inline-block;
+  margin-right: auto;
+}
+
+.agent-details .detail-label {
+  color: #ccc;
+  font-size: .75rem;
+}
+
+.agent-details {
+  display: none;
+}
+
+.agent-details.open {
+  margin-top: .5rem;
+  display: flex;
+}
+
+.agent-status {
+  float: right;
+}

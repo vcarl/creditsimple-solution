@@ -1,6 +1,3 @@
-// The directions said to fix any style or functionality problems, IMO using
-// ES5 pseudo-classes and passing a callback is a style problem in the current
-// JS ecosystem. This is a dramatic change, but it's equivalent and standard.
 class Api {
   constructor() {
     this.baseUrl = 'https://dea.staging.credsimple.com';
